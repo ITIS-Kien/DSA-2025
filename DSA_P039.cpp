@@ -8,11 +8,11 @@ using namespace std;
 #define setf(x, n, c) setw(n) << setfill(c) << x
 //ITIS LA NHA
 
-struct point{
-    int value, row, col;
+struct tmp{
+    int val, row, col;
 };
-bool cmp (point x, point y){
-    return x.value > y.value;
+bool cmp(tmp a, tmp b){
+    return a.val > b.val;
 }
 
 int main(){
@@ -20,24 +20,29 @@ int main(){
     while (t--)
     {
         int n; cin >> n;
-        vector <vector <point>> a(n, vector <point> (n));
+        int col[n], row[n];
+        vector <tmp> a;
         for (int i = 0; i < n; i++){
             for (int j = 0; j < n; j++){
-                cin >> a[i][j].value;
-                a[i][j].row = i;
-                a[i][j].col = j;
+                tmp x; cin >> x.val;
+                x.row = i;
+                x.col = j;
+                a.push_back(x);
             }
-            sort(a[i].begin(), a[i].end(), cmp);
         }
-        for (int i = 0; i < n; i++)
-        {
-            /* code */
+        int sum = 0;
+        sort(a.begin(), a.end(), cmp);
+        memset(row, 0, sizeof(row));
+        memset(col, 0, sizeof(col));
+        for (int i = 0; i < n * n; i++){
+            int x = a[i].val;
+            int r = a[i].row, c = a[i].col;
+            if(!row[r] && !col[c]){
+                sum += x;
+                row[r] = 1;
+                col[c] = 1;
+            }
         }
-        
-                
+        cout << sum << endl;
     }
-        
-        
-    
-    
 }

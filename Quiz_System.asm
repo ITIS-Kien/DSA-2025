@@ -1,30 +1,30 @@
-.MODEL SMALL   ; Xác định mô hình bộ nhớ nhỏ
-.STACK 100H    ; Cấp phát bộ nhớ stack 256 byte
+.MODEL SMALL
+.STACK 100H
 
-.DATA          ; Khai báo vùng dữ liệu
-HEADER DB "BO CAU HOI CO BAN"     ; Tiêu đề của chương trình
-       DB 10, 13, ""              ; Xuống dòng
-       DB 10, 13, "$"             ; Ký tự kết thúc chuỗi
+.DATA
+HEADER DB "BO CAU HOI CO BAN"
+       DB 10, 13, ""
+       DB 10, 13, "$"
 
-NOTICE DB 10, 13, "CHU Y : TAT UNIKEY TRUOC KHI SU DUNG $" ; Lưu ý
-       DB 10, 13, ""              ; Xuống dòng
-       DB 10, 13, "$"             ; Ký tự kết thúc chuỗi
+NOTICE DB 10, 13, "CHU Y : TAT UNIKEY TRUOC KHI SU DUNG $"
+       DB 10, 13, ""
+       DB 10, 13, "$"
 
-COMNAM DB 10, 13, ""              ; Xuống dòng
-       DB 10, 13, "NHAP THONG TIN : $" ; Yêu cầu nhập tên
-SUR DB 10, 13, "HO : $"                ; Nhập họ
-INPUTSUR DB 21                         ; Bộ đệm nhập họ
-INPUTS DB 21 DUP("$")                  ; Bộ đệm lưu họ
+COMNAM DB 10, 13, ""
+       DB 10, 13, "NHAP THONG TIN : $"
+SUR DB 10, 13, "HO : $"
+INPUTSUR DB 21
+INPUTS DB 21 DUP("$")
 
-FIR DB " TEN : $"                      ; Nhập tên
-INPUTFIR DB 21                         ; Bộ đệm nhập tên
-INPUTF DB 21 DUP("$")                  ; Bộ đệm lưu tên
+FIR DB " TEN : $"
+INPUTFIR DB 21
+INPUTF DB 21 DUP("$")
 
-MI DB " ID: $"                         ; Nhập ID
-INPUTMI DB 21                          ; Bộ đệm nhập ID
-INPUTM DB 21 DUP("$")                  ; Bộ đệm lưu ID
+MI DB " ID: $"
+INPUTMI DB 21
+INPUTM DB 21 DUP("$")
 
-CORRECT DB 10, 13, "DAP AN DUNG! $"    ; Thông báo khi đáp án đúng
+CORRECT DB 10, 13, "DAP AN DUNG! $"
 
 PAR1 DB 10, 13, ""
      DB 10, 13, "PHAN I $"
@@ -113,92 +113,101 @@ MESSAGE2 DB 13, 10, ""
 MESSAGE3 DB 13, 10, ""
          DB 13, 10, "NHAN PHIM 1 DE LAM LAI HOAC 0 DE THOAT: $"
 MESSAGE4 DB 13, 10, ""
-         DB 13, 10, "                    ***CAM ON.! ***$"
+         DB 13, 10, "                    ***CAM ON.!***"
+         DB 13, 10, ""
+         DB 13, 10, "                    *** NHOM 3 ***"
+         DB 13, 10, ""
+         DB 13, 10, "LEADER :       NGUYEN TU KIEN"
+         DB 13, 10, ""
+         DB 13, 10, "FRONT-END :    TRAN THI ANH DUONG"
+         DB 13, 10, ""
+         DB 13, 10, "BACK-END :     VUONG QUOC HUNG"
+         DB 13, 10, ""
+         DB 13, 10, "              BUI HUY HOANG$"
 
-.CODE          ; KHAI BÁO PHẦN CODE
-MAIN PROC      ; ĐỂM HÀM CHÍNH
-    MOV AX, @DATA   ; Nạp phần dữ liệu vào thanh ghi
-    MOV DS, AX      ; Chuyền dữ liệu vào DS
+.CODE
+MAIN PROC
+    MOV AX, @DATA
+    MOV DS, AX
     
-    LEA DX, HEADER  ; Tải tiêu đề
-    MOV AH, 9       ; Hiển thị chuỗi
+    LEA DX, HEADER
+    MOV AH, 9
     INT 21H
 
-    LEA DX, NOTICE  ; Tải thông báo
+    LEA DX, NOTICE
     MOV AH, 9
     INT 21H
     
-    LEA DX, COMNAM  ; Yêu cầu nhập tên
+    LEA DX, COMNAM
     MOV AH, 9
     INT 21H
     
-    LEA DX, SUR     ; Nhập họ
+    LEA DX, SUR
     MOV AH, 9
     INT 21H
-    LEA DX, INPUTSUR  ; Lấy dữ liệu họ
+    LEA DX, INPUTSUR
     MOV AH, 0AH
     INT 21H
     
-    LEA DX, FIR     ; Nhập tên
+    LEA DX, FIR
     MOV AH, 9
     INT 21H
-    LEA DX, INPUTFIR  ; Lấy dữ liệu tên
+    LEA DX, INPUTFIR
     MOV AH, 0AH
     INT 21H
     
-    LEA DX, MI      ; Nhập ID
+    LEA DX, MI
     MOV AH, 9
     INT 21H
-    LEA DX, INPUTMI  ; Lấy dữ liệu ID
+    LEA DX, INPUTMI
     MOV AH, 0AH
     INT 21H
 
+START:
+    MOV BL, 0
 
-START:  ; Bắt đầu làm quiz
-    MOV BL, 0  ; Thanh ghi BL lưu điểm
-
-    LEA DX, MESSAGE1  ; Hiển thị thông báo bắt đầu quiz
+    LEA DX, MESSAGE1
     MOV AH, 9
     INT 21H
     
-    MOV AH, 1  ; Nhập 1 ký tự từ bàn phím (Phím Enter)
-    INT 21H    ; Chờ người dùng nhập
+    MOV AH, 1
+    INT 21H
     
-    CMP AL, 0DH  ; So sánh ký tự vừa nhập với ODH (Ký tự xuống dòng)
-    JE PART1    ; Nếu đúng thì chuyển đến phần 1
-    JNE START   ; Nếu sai thì nhập lại
+    CMP AL, 0DH
+    JE PART1
+    JNE START
 
 PART1:
-    LEA DX, PAR1  ; Hiển thị phần 1
+    LEA DX, PAR1
     MOV AH, 9
     INT 21H 
-    LEA DX, DIRECM  ; Hiển thị hướng dẫn
+    LEA DX, DIRECM
     MOV AH, 9
     INT 21H
 
     
 QUESTION1:
-    LEA DX, QUIZ1  ; Hiển thị câu hỏi 1
+    LEA DX, QUIZ1
     MOV AH, 9
     INT 21H
     
-    MOV AH, 1  ; Nhập câu trả lời từ bàn phím
+    MOV AH, 1
     INT 21H
-    CMP AL, 43H  ; So sánh với ‘C’
+    CMP AL, 43H
     JE QC1
-    CMP AL, 63H  ; So sánh với ‘c’
-    JE QC1     ; Nếu đúng nhảy đến QC1
-    JMP QW1    ; Nếu sai nhảy đến QW1
+    CMP AL, 63H
+    JE QC1
+    JMP QW1
     
 QC1:
-    LEA DX, CORRECT  ; Hiển thị thông báo đúng
-    INC BL  ; Tăng điểm
+    LEA DX, CORRECT
+    INC BL
     MOV AH, 9
     INT 21H
-    CALL QUESTION2  ; Chuyển sang câu hỏi 2
+    CALL QUESTION2
 
 QW1:
-    LEA DX, WR1  ; Hiển thị thông báo 2
+    LEA DX, WR1
     MOV AH, 9
     INT 21H
 
@@ -429,7 +438,7 @@ QC10:
     LEA DX, CORRECT
     MOV AH, 9
     INT 21H
-    CALL END_QUIZ    ; Gọi hàm kết thúc quiz
+    CALL END_QUIZ
 
 QW10:
     LEA DX, WR10
@@ -437,57 +446,49 @@ QW10:
     INT 21H   
     CALL END_QUIZ
 
-TEN:  ; Hàm xử lý số có 2 chữ số
-    MOV AH, 2  ; Gọi chức năng hiển thị ký tự
-    MOV DL, '1'  ; Truyền ký tự '1' để in
-    INT 21H  
-    MOV DL, '0'  ; In ký tự '0'
-    INT 21H
-    RET     
-
 END_QUIZ:
-    MOV DL, 12  ; Xóa màn hình
+    MOV DL, 12
     MOV AH, 5
     INT 21H
     
-    MOV SI, OFFSET CONG  ; Trỏ đến chuỗi "CHÚC MỪNG"
-    MOV CX, OFFSET CONG_END - OFFSET CONG  ; Độ dài chuỗi
+    MOV SI, OFFSET CONG
+    MOV CX, OFFSET CONG_END - OFFSET CONG
     
 P1:
-    MOV DL, [SI]  ; Lấy ký tự từ chuỗi
+    MOV DL, [SI]
     MOV AH, 5
     INT 21H
     INC SI
-    LOOP P1  ; Lặp cho đến khi hết chuỗi
+    LOOP P1
     
-    MOV SI, OFFSET INPUTSUR  ; Lấy họ
-    MOV CL, [INPUTSUR+1]  ; Số ký tự thực tế nhập vào
-    XOR CH, CH  ; Đặt CH = 0 để CX chứa giá trị đúng
+    MOV SI, OFFSET INPUTSUR
+    MOV CL, [INPUTSUR+1]
+    XOR CH, CH
 
 P2:
-    MOV DL, [SI+2]  ; Bỏ qua 1 byte đầu tiên
+    MOV DL, [SI+2]
     MOV AH, 5
     INT 21H
     INC SI
     LOOP P2
 
-    MOV DL, ' '  ; In khoảng trắng
+    MOV DL, ' '
     MOV AH, 5
     INT 21H
 
-    MOV SI, OFFSET INPUTFIR  ; Lấy tên
-    MOV CL, [INPUTFIR+1]  ; Số ký tự thực tế nhập vào
-    XOR CH, CH  ; Đặt CH = 0 để CX chứa giá trị đúng
+    MOV SI, OFFSET INPUTFIR
+    MOV CL, [INPUTFIR+1]
+    XOR CH, CH
 
 P3:
-    MOV DL, [SI+2]  ; Bỏ qua 1 byte đầu tiên
+    MOV DL, [SI+2]
     MOV AH, 5
     INT 21H
     INC SI
     LOOP P3
     
-    MOV SI, OFFSET PQUIZ  ; Hiển thị thông báo hoàn thành quiz
-    MOV CX, OFFSET PQUIZ_END - OFFSET PQUIZ  ; Độ dài chuỗi
+    MOV SI, OFFSET PQUIZ
+    MOV CX, OFFSET PQUIZ_END - OFFSET PQUIZ
     
 P4:
     MOV DL, [SI]
@@ -496,55 +497,62 @@ P4:
     INC SI
     LOOP P4
     
-    MOV DL, 10  ; Xuống dòng
+    MOV DL, 10
     INT 21H
     MOV DL, 13
     INT 21H
     
-    LEA DX, MESSAGE2  ; Hiển thị thông báo nhấn phím
+    LEA DX, MESSAGE2
     MOV AH, 9
     INT 21H
     
-    ADD BL, 48  ; Chuyển điểm từ số sang mã ASCII ('0' = 48)
-    CMP BL, 57  ; Kiểm tra xem số điểm có 1 hay 2 chữ số ('9' = 57)
-    JG TEN  ; Nếu lớn hơn, chuyển sang xử lý 2 chữ số (10 điểm)
+    ADD BL, 48
+    CMP BL, 57
+    JG TEN
 
-    MOV AH, 2  ; Chức năng in 1 ký tự
-    MOV DL, BL  ; Đưa số điểm vào DL để in ra
-    INT 21H  ; In ra số điểm
-    CALL EXIT  ; Kết thúc chương trình
+    MOV AH, 2
+    MOV DL, BL
+    INT 21H
+    CALL EXIT
 
+TEN:
+    MOV AH, 2
+    MOV DL, '1'
+    INT 21H  
 
+    MOV AH, 2
+    MOV DL, '0'
+    INT 21H
+    CALL EXIT
 
-EXIT:  ; Hàm kết thúc chương trình
-    LEA DX, MESSAGE3  ; Hiển thị thông báo điểm
+EXIT:
+    LEA DX, MESSAGE3
     MOV AH, 9
     INT 21H
     
-    MOV AH, 1  ; Đọc 1 ký tự từ người dùng
+    MOV AH, 1
     INT 21H
     
-    CMP AL, '1'  ; Nếu là '1' thì restart
+    CMP AL, '1'
     JE START
     
-    CMP AL, '0'  ; nếu là '0' thì kết thúc chương trình
+    CMP AL, '0'
     JE FINISH 
-    JMP EXIT    ; Nếu không thì cho nhập lại
+    JMP EXIT
 
 FINISH: 
-    LEA DX, MESSAGE4  ; Hiển thị thông báo thoát
+    LEA DX, MESSAGE4
     MOV AH, 9
     INT 21H
     
-    MOV AH, 4CH  ; gọi hàm 4CH để thoát chương trình
+    MOV AH, 4CH
     INT 21H
 
 MAIN ENDP
 END MAIN
 
-     
-    
-      
+
+
 
 
 
