@@ -41,8 +41,8 @@ int solve(){
 }
 int main() {
     fast;
-    input();
-    if(solve()) cout << "strongly connected";
-    else cout << "not strongly connected";
+        input();
+        if(solve()) cout << "strongly connected";
+        else cout << "not strongly connected";
     
 }
