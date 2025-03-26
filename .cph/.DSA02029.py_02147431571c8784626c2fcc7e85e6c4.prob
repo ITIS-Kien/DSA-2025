@@ -1,1 +1,0 @@
-{"name":"Local: DSA02029","url":"c:\\Users\\user\\Documents\\Data Structure and Algorithm\\DSA02029.py","tests":[{"id":1742517772649,"input":"3","output":"A -> C\nA -> B\nC -> B\nA -> C\nB -> A\nB -> C\nA -> C"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\user\\Documents\\Data Structure and Algorithm\\DSA02029.py","group":"local","local":true}
