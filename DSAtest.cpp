@@ -1,44 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 #define ll long long
-#define fast                          \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL);
-#define endl "\n"
-const int mod = 1e9 + 7;
 
-int check = 0;
-void Try(int i, int n)
-{
-    if (i == 1 && check == 1)
-    {
-        cout << i << " ";
-    }
-    else
-    {
-        if (i == n)
-            check = 1;
-        if (check == 0)
-            Try(i + 1, n);
-        else
-            Try(i - 1, n);
-        cout << i << " ";
-    }
-}
-int main()
-{
-    fast;
-    int t = 1;
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int t;
     cin >> t;
-    while (t--)
-    {
-        check = 0;
+    while (t--) {
         int n;
         cin >> n;
-        if(n == 1) cout << 1 << endl;
-        else Try(1, n);
-        cout << endl;
+        vector<ll> a(n);
+        ll sum_even = 0;
+        ll max_odd = -1;
+        ll max_all = 0;
+        bool has_even = false;
+        bool has_odd = false;
+        for (int i = 0; i < n; ++i) {
+            cin >> a[i];
+            max_all = max(max_all, a[i]);
+            if (a[i] % 2 == 0) {
+                sum_even += a[i];
+                has_even = true;
+            } else {
+                if (a[i] > max_odd) {
+                    max_odd = a[i];
+                }
+                has_odd = true;
+            }
+        }
+        if (has_even && has_odd) {
+            cout << sum_even + max_odd << endl;
+        } else {
+            cout << max_all << endl;
+        }
     }
+    return 0;
 }
