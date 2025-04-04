@@ -1,47 +1,48 @@
-#include<iostream> 
-#include<vector>
-#include<cstring>
+#include <bits/stdc++.h>
 using namespace std;
 #define ll long long
 #define endl '\n'
 #define mod 1000000007
 #define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
 
-vector <vector <int>> a(1005);
-int n, used[1005];
-void dfs(int u){
-    used[u] = 1;
-    for (int it : a[u]) if(!used[it]) dfs(it);
-}
-void solve(){
-    int cc = 0;
-    for(int i = 1; i <= n; ++i){
-        if(!used[i]){
-            ++cc;
-            dfs(i);
+int a[20], sum, cnt = 0;
+vector <int> v10, v5;
+void Try5(int i, int s){
+    if(i == 5){
+        int tmp = 0;
+        for (int it : v5) {
+            tmp += a[v10[it]];
+        }
+        if(tmp == sum / 3) ++cnt;
+    } else {
+        for (int j = s; j < 10 - j + 5; ++j){
+            v5.push_back(j);
+            Try5(i + 1, j + 1);
+            v5.pop_back();
         }
     }
-    for (int i = 1; i <= n; ++i){
-        memset(used, 0, sizeof(used));
-        used[i] = 1;
-        int cnt = 0;
-        for (int j = 1; j <= n; ++j){
-            if(!used[j]){
-                ++cnt;
-                dfs(j);
-            }
+}
+void Try10(int i, int s){
+    if(i == 10){
+        int tmp = 0;
+        for (int it : v10) {
+            tmp += a[it];
         }
-        if(cnt > cc) cout << i << " ";
+        if(tmp == sum / 3 * 2) Try5(0, 0);
+    } else {
+        for (int j = s; j < 15 - j + 10; ++j){
+            v10.push_back(j);
+            Try10(i + 1, j + 1);
+            v10.pop_back();
+        }
     }
 }
 int main(){
     fast;
-    cin >> n;
-    for (int i = 1; i <= n; ++i){
-        for (int j = 1; j <= n; ++j){
-            int x; cin >> x;
-            if(x) a[i].emplace_back(j);
-        }
+    for (int i = 0; i < 15; ++i) {
+        cin >> a[i];
+        sum += a[i];
     }
-    solve();
+    Try10(0, 0);
+    cout << cnt;
 }
