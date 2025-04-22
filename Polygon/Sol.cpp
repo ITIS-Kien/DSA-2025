@@ -31,13 +31,13 @@ int main() {
 		string s1, s2, ans = "";
 		string s;
 		cin >> s >> s1;
-        // Nếu NOT thì chỉ nhập xâu s1
+        	// Nếu NOT thì chỉ nhập xâu s1
 		if(s != "NOT") {
-			cin >> s2;
-            // Đảm bảo độ dài 2 xâu bằng nhau
-			len(s1, s2);
-            // Duyệt từ cuối xâu đi lên
-			for(int i = s1.size() - 1; i >= 0; --i) {
+		    cin >> s2;
+            	// Đảm bảo độ dài 2 xâu bằng nhau
+		    len(s1, s2);
+            	// Duyệt từ cuối xâu đi lên
+		    for(int i = s1.size() - 1; i >= 0; --i) {
 				if(s == "AND") {
                     // Phép toàn AND bằng 1 khi và chỉ khi cả 2 bit bằng 1
                     if(s1[i] == '1' and s2[i] == '1') ans = "1" + ans;
