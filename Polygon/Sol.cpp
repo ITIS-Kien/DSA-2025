@@ -39,15 +39,15 @@ int main() {
             	// Duyệt từ cuối xâu đi lên
 		    for(int i = s1.size() - 1; i >= 0; --i) {
 				if(s == "AND") {
-                    // Phép toàn AND bằng 1 khi và chỉ khi cả 2 bit bằng 1
+                    // Phép toán AND bằng 1 khi và chỉ khi cả 2 bit bằng 1
                     if(s1[i] == '1' and s2[i] == '1') ans = "1" + ans;
                     else ans = "0" + ans;
                 } else if(s == "OR") {
-                    // Phép toàn OR bằng 0 khi và chỉ khi cả 2 bit bằng 0
+                    // Phép toán OR bằng 0 khi và chỉ khi cả 2 bit bằng 0
                     if(s1[i] == '0' and s2[i] == '0') ans = "0" + ans;
                     else ans = "1" + ans;
                 } else {
-                    // Phép toàn XOR bằng 0 khi và chỉ khi cả 2 bit bằng nhau
+                    // Phép toán XOR bằng 0 khi và chỉ khi cả 2 bit bằng nhau
                     if(s1[i] == s2[i]) ans = "0" + ans;
                     else ans = "1" + ans;
                 }
@@ -58,7 +58,7 @@ int main() {
                 else ans = "0" + ans;
 			}
 		}
-        // Loại bỏ các số 0 thừa ở đầu xâu
+        	// Loại bỏ các số 0 thừa ở đầu xâu
 		cout << era(ans) << '\n';
 	}
 }
