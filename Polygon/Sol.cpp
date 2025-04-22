@@ -33,32 +33,29 @@ int main() {
 		cin >> s >> s1;
         	// Nếu NOT thì chỉ nhập xâu s1
 		if(s != "NOT") {
-		    cin >> s2;
-            	// Đảm bảo độ dài 2 xâu bằng nhau
-		    len(s1, s2);
-            	// Duyệt từ cuối xâu đi lên
-		    for(int i = s1.size() - 1; i >= 0; --i) {
-				if(s == "AND") {
-                    // Phép toán AND bằng 1 khi và chỉ khi cả 2 bit bằng 1
-                    if(s1[i] == '1' and s2[i] == '1') ans = "1" + ans;
-                    else ans = "0" + ans;
-                } else if(s == "OR") {
-                    // Phép toán OR bằng 0 khi và chỉ khi cả 2 bit bằng 0
-                    if(s1[i] == '0' and s2[i] == '0') ans = "0" + ans;
-                    else ans = "1" + ans;
-                } else {
-                    // Phép toán XOR bằng 0 khi và chỉ khi cả 2 bit bằng nhau
-                    if(s1[i] == s2[i]) ans = "0" + ans;
-                    else ans = "1" + ans;
-                }
-			}
+		        cin >> s2;
+            	        // Đảm bảo độ dài 2 xâu bằng nhau
+		        len(s1, s2);
+            	        // Duyệt từ cuối xâu đi lên
+        		for(int i = s1.size() - 1; i >= 0; --i) {
+                	        if(s == "AND") { // Phép toán AND bằng 1 khi và chỉ khi cả 2 bit bằng 1
+                                    if(s1[i] == '1' and s2[i] == '1') ans = "1" + ans;
+                                    else ans = "0" + ans;
+                                } else if(s == "OR") { // Phép toán OR bằng 0 khi và chỉ khi cả 2 bit bằng 0
+                                    if(s1[i] == '0' and s2[i] == '0') ans = "0" + ans;
+                                    else ans = "1" + ans;
+                                } else {// Phép toán XOR bằng 0 khi và chỉ khi cả 2 bit bằng nhau
+                                    if(s1[i] == s2[i]) ans = "0" + ans;
+                                    else ans = "1" + ans;
+                                }
+        		}
 		} else { // Phép toán NOT là phép toán đảo bit, bit 1 thành 0 và ngược lại
 			for(int i = s1.size() - 1; i >= 0; --i) {
-                if (s1[i] == '0') ans = "1" + ans;
-                else ans = "0" + ans;
+                                if (s1[i] == '0') ans = "1" + ans;
+                                else ans = "0" + ans;
 			}
 		}
-        	// Loại bỏ các số 0 thừa ở đầu xâu
+                // Loại bỏ các số 0 thừa ở đầu xâu
 		cout << era(ans) << '\n';
 	}
 }
