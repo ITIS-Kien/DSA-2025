@@ -1,1 +1,0 @@
-{"name":"Local: C","url":"c:\\Users\\user\\Documents\\Workspace\\Polygon\\C.cpp","tests":[{"id":1744562530347,"input":"5\nR\nRR\nLRLRR\nLRLRRRRR\nLR\nLLLR\nLLLLLRL\nLLLLRRLL\nLLRLRLRRL\nLLLRLRRLLRRRL\n\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\user\\Documents\\Workspace\\Polygon\\C.cpp","group":"local","local":true}

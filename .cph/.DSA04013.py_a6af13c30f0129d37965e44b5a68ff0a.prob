@@ -1,0 +1,1 @@
+{"name":"Local: DSA04013","url":"c:\\Users\\user\\OneDrive\\Documents\\Workspace\\DSA\\DSA04013.py","tests":[{"id":1745972553217,"input":"2\n8\n2 5 7 6 9 8 4 2\n8\n9 1 6 2 6 5 8 3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\user\\OneDrive\\Documents\\Workspace\\DSA\\DSA04013.py","group":"local","local":true}
