@@ -6,41 +6,30 @@ using namespace std;
 #define endl '\n'
 const int MOD = 1e9 + 7;
 
-int V, E, used[1001],
-    degIn[1001], degOut[1001];
-vector <int> adj[1001];
+int V, E, degIn[1001], degOut[1001];
 
-void DFS(int u){
-    used[u] = 1;
-    for (int &it : adj[u]) if (!used[it]) DFS(it);
-}
-
-bool cycleCheck(){
-    int cycle = 0;
-    memset(used, 0, sizeof(used));
-    for (int i = 1; i <= V; ++i){
-        if(!used[i]){
-            ++cycle;
-            DFS(i);
-        }
+bool checkEuler(){
+    int cnt = 0;
+    for (int i = 1; i <= V; ++i) {
+        cnt += (abs(degIn[i] - degOut[i]) == 1);
+        if(cnt > 2 or abs(degIn[i] - degOut[i]) > 1 or !degIn[i] or !degOut[i]) return 0;
     }
-    return cycle == 1;
+    return 1;
 }
 int main(){
     BOOST;
     int t; cin >> t;
     while (t--)
     {
+        memset(degIn, 0, sizeof(degIn));
+        memset(degOut, 0, sizeof(degOut));
         cin >> V >> E;
         while (E--)
         {
             int x, y; cin >> x >> y;
             ++degOut[x];
             ++degIn[y];
-            adj[x].emplace_back(y);
         }
-        
+        cout << (checkEuler() ? 1 : 0) << endl;    
     }
-    
-    
 }
