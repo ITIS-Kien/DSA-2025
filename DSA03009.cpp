@@ -7,10 +7,12 @@ using namespace std;
 #define fixs(x, n) fixed << setprecision(n) << x
 #define setf(x, n, c) setw(n) << setfill(c) << x
 //ITIS LA NHA
-bool cmp(pair<int, int> a, pair<int, int> b) { 
-    if(a.first == b.first) return a.second > b.second;
-    return a.first < b.first; 
+
+// Custom comparator to sort by deadline in descending order
+bool cmp(pair<int, int> a, pair<int, int> b) {
+    return a.first > b.first;
 }
+
 int main(){
     int t, n; cin >> t;
     while (t--)
@@ -22,14 +24,19 @@ int main(){
             int a, b, c; cin >> a >> b >> c;
             vp.push_back({b, c});
         }
+        // Sort by deadline in descending order
         sort(vp.begin(), vp.end(), cmp);
-        int res = vp[0].second, k = 0, cnt = 1;
-        for (int i = 1; i < n; i++)
-        {
-            if(vp[i].first > vp[k].first){
-                res += vp[i].second;
-                k = i;
-                ++cnt;
+        int maxDL = vp[0].first, res = 0, cnt = 0, idx = 0;
+        priority_queue<int> pq;
+        for (int i = maxDL; i >= 1; i--){
+            while (idx < n && vp[idx].first >= i){
+                pq.push(vp[idx].second);
+                idx++;
+            }
+            if(!pq.empty()){
+                res += pq.top();
+                pq.pop();
+                cnt++;
             }
         }
         cout << cnt << " " << res << endl;
